@@ -33,7 +33,6 @@ export default function BookForm() {
           <span className="font-semibold mb-2">Description:</span>
           <textarea
             className="w-full p-2 text-gray-900 border border-gray-300 rounded-lg"
-            type="text"
             name="description"
           />
         </label>
