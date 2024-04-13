@@ -4,42 +4,44 @@ import { useSearchParams } from "next/navigation";
 import "./bookForm.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { BookData, BookFormData } from "@/app/models/book";
 
-export default function BookForm({pathname, ...props}) {
+export default function BookForm({ pathname }: { pathname: string }) {
   const searchParams = useSearchParams();
   const action = searchParams.get("action");
   const id = searchParams.get("id");
   const booksData = useAppSelector((state) => {
-    return state.bookReducer.booksData
+    return state.bookReducer.booksData;
   });
   const [bookData, setBookData] = useState({
     title: "",
-    price: "",
+    price: 0,
     category: "",
     description: "",
-  } as any);
+  } as BookFormData);
 
   useEffect(() => {
-    if(action === "edit" && id) {
-      const book = booksData.books.find((book) => 
-        { 
-          return book._id.toString() === id
-        });
+    if (action === "edit" && id) {
+      const book = booksData.books.find((book: BookData) => {
+        return book._id.toString() === id;
+      });
 
-        if(book) {
-          setBookData(book);
-        }
+      if (book) {
+        setBookData(book);
+      }
     }
- },[booksData, action, id])
+  }, [booksData, action, id]);
 
-  const handleChange = (event) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setBookData({
-        ...bookData,
-        [event.target.name]: event.target.value
-    })
+      ...bookData,
+      [event.target.name]: event.target.value,
+    });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(bookData);
   };
@@ -62,7 +64,7 @@ export default function BookForm({pathname, ...props}) {
             className="w-full p-2 text-gray-900 border border-gray-300 rounded-lg"
             type="text"
             name="title"
-            placeholder="Title" 
+            placeholder="Title"
             value={bookData.title}
             onChange={handleChange}
           />
@@ -73,7 +75,7 @@ export default function BookForm({pathname, ...props}) {
             className="w-full p-2 text-gray-900 border border-gray-300 rounded-lg"
             type="number"
             name="price"
-            placeholder="Price" 
+            placeholder="Price"
             value={bookData.price}
             onChange={handleChange}
           />
@@ -84,7 +86,7 @@ export default function BookForm({pathname, ...props}) {
             className="w-full p-2 text-gray-900 border border-gray-300 rounded-lg"
             type="text"
             name="category"
-            placeholder="Category" 
+            placeholder="Category"
             value={bookData.category}
             onChange={handleChange}
           />
@@ -94,19 +96,24 @@ export default function BookForm({pathname, ...props}) {
           <textarea
             className="w-full p-2 text-gray-900 border border-gray-300 rounded-lg"
             name="description"
-            placeholder="Description" 
+            placeholder="Description"
             value={bookData.description}
             onChange={handleChange}
           />
         </label>
         <div className="flex flex-row w-full justify-around">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                          Add
-                        </button>
-                        <Link href={pathname}>
-                            <button type="button" className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Close</button>
-                        </Link>
-                        </div>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Add
+          </button>
+          <Link href={pathname}>
+            <button
+              type="button"
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Close
+            </button>
+          </Link>
+        </div>
       </form>
     </div>
   );

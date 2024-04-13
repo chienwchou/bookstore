@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useAppSelector } from "@/lib/store";
+import { BookData } from "./models/book";
 
 export default function Home() {
   const booksData = useAppSelector((state) => {
@@ -25,7 +26,7 @@ export default function Home() {
     </main>
     <main className="flex min-h-screen flex-col items-center justify-between p-24 p-10">
       <ul className="grid grid-cols-3 gap-4">
-        {booksData['books'].map((book) => (
+        {booksData['books'].map((book: BookData) => (
           <li key={book._id} className="flex flex-col items-center mb-3">
             <div>
               <Link className="flex flex-col items-center" href={"?modal=true&action=edit&id="+book._id}>
