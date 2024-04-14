@@ -5,7 +5,6 @@ import BookForm from "../bookForm/bookForm";
 function Modal() {
   const searchParams = useSearchParams();
   const modal = searchParams.get("modal");
-
   const pathname = usePathname();
 
   return (

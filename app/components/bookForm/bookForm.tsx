@@ -39,14 +39,24 @@ export default function BookForm({ pathname }: { pathname: string }) {
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    let value = event.target.value;
+    // check if the price is 2 decimal places
+    if (event.target.name == "price" && event.target.value) {
+      const validated = event.target.value.match(/^(\d*\.{0,1}\d{0,2}$)/);
+      if (!validated) {
+        return;
+      }
+    }
+
     setBookData({
       ...bookData,
-      [event.target.name]: event.target.value,
+      [event.target.name]: value,
     });
   };
 
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     switch (action) {
       case "edit":
         if (!id) return;
@@ -95,6 +105,7 @@ export default function BookForm({ pathname }: { pathname: string }) {
             value={bookData.title}
             onChange={handleChange}
             disabled={action === "delete"}
+            required={true}
           />
         </label>
         <label className="flex flex-col">
@@ -107,6 +118,7 @@ export default function BookForm({ pathname }: { pathname: string }) {
             value={bookData.price}
             onChange={handleChange}
             disabled={action === "delete"}
+            step=".01"
           />
         </label>
         <label className="flex flex-col">
