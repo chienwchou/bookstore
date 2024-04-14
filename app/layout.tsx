@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Modal from "./components/layouts/CustomModal";
 import StoreProvider from "./provider";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <StoreProvider>
-          {children} <Modal />
+          {children}{" "}
+          <Suspense>
+            <Modal />
+          </Suspense>
         </StoreProvider>
       </body>
     </html>
