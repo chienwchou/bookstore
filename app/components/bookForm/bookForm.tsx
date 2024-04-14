@@ -1,17 +1,22 @@
 "use client";
-import { useAppSelector } from "@/lib/store";
-import { useSearchParams } from "next/navigation";
+import { AppDispatch, useAppSelector } from "@/lib/store";
+import { useRouter, useSearchParams } from "next/navigation";
 import "./bookForm.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { BookData, BookFormData } from "@/app/models/book";
+import { useDispatch } from "react-redux";
+import { addBook, deleteBook, editBook } from "@/lib/features/books-slice";
 
 export default function BookForm({ pathname }: { pathname: string }) {
   const searchParams = useSearchParams();
   const action = searchParams.get("action");
   const id = searchParams.get("id");
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+
   const booksData = useAppSelector((state) => {
-    return state.bookReducer.booksData;
+    return state.bookReducer.books;
   });
   const [bookData, setBookData] = useState({
     title: "",
@@ -21,8 +26,8 @@ export default function BookForm({ pathname }: { pathname: string }) {
   } as BookFormData);
 
   useEffect(() => {
-    if (action === "edit" && id) {
-      const book = booksData.books.find((book: BookData) => {
+    if ((action === "edit" || "delete") && id) {
+      const book = booksData.find((book: BookData) => {
         return book._id.toString() === id;
       });
 
@@ -43,13 +48,36 @@ export default function BookForm({ pathname }: { pathname: string }) {
 
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(bookData);
+    switch (action) {
+      case "edit":
+        if (!id) return;
+        dispatch(
+          editBook({
+            _id: id,
+            ...bookData,
+          })
+        );
+        break;
+      case "delete":
+        if (!id) return;
+        dispatch(deleteBook(id));
+        break;
+      default:
+        dispatch(addBook(bookData));
+    }
+    router.replace(pathname);
   };
 
   let header = "Add a new book";
+  let button = "Add";
   switch (action) {
     case "edit":
       header = "Edit the book";
+      button = "Edit";
+      break;
+    case "delete":
+      header = "Delete the book";
+      button = "Delete";
       break;
     default:
   }
@@ -67,6 +95,7 @@ export default function BookForm({ pathname }: { pathname: string }) {
             placeholder="Title"
             value={bookData.title}
             onChange={handleChange}
+            disabled={action === "delete"}
           />
         </label>
         <label className="flex flex-col">
@@ -78,6 +107,7 @@ export default function BookForm({ pathname }: { pathname: string }) {
             placeholder="Price"
             value={bookData.price}
             onChange={handleChange}
+            disabled={action === "delete"}
           />
         </label>
         <label className="flex flex-col">
@@ -89,6 +119,7 @@ export default function BookForm({ pathname }: { pathname: string }) {
             placeholder="Category"
             value={bookData.category}
             onChange={handleChange}
+            disabled={action === "delete"}
           />
         </label>
         <label className="flex flex-col">
@@ -99,11 +130,12 @@ export default function BookForm({ pathname }: { pathname: string }) {
             placeholder="Description"
             value={bookData.description}
             onChange={handleChange}
+            disabled={action === "delete"}
           />
         </label>
-        <div className="flex flex-row w-full justify-around">
+        <div className="flex flex-row w-full justify-around my-3">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Add
+            {button}
           </button>
           <Link href={pathname}>
             <button

@@ -7,7 +7,7 @@ import { BookData } from "./models/book";
 
 export default function Home() {
   const booksData = useAppSelector((state) => {
-    return state.bookReducer.booksData;
+    return state.bookReducer.books;
   });
 
   return (
@@ -26,7 +26,7 @@ export default function Home() {
       </main>
       <main className="flex min-h-screen flex-col items-center justify-between p-24 p-10">
         <ul className="grid grid-cols-3 gap-4">
-          {booksData["books"].map((book: BookData) => (
+          {booksData.map((book: BookData) => (
             <li key={book._id} className="flex flex-col items-center mb-3">
               <div>
                 <Link
@@ -35,7 +35,6 @@ export default function Home() {
                 >
                   <Image
                     src="/book.png"
-                    quality={75}
                     alt={book.title}
                     width={200}
                     height={300}
