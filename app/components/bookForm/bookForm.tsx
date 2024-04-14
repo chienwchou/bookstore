@@ -1,7 +1,6 @@
 "use client";
 import { AppDispatch, useAppSelector } from "@/lib/store";
 import { useRouter, useSearchParams } from "next/navigation";
-import "./bookForm.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { BookData, BookFormData } from "@/app/models/book";
@@ -65,7 +64,7 @@ export default function BookForm({ pathname }: { pathname: string }) {
       default:
         dispatch(addBook(bookData));
     }
-    router.replace(pathname);
+    router.push(pathname);
   };
 
   let header = "Add a new book";
