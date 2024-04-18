@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams, usePathname } from "next/navigation";
-import BookForm from "../bookForm/bookForm";
+import BookForm from "../../bookForm/bookForm";
 
 function Modal() {
   const searchParams = useSearchParams();

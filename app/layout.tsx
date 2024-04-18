@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Modal from "./components/layouts/CustomModal";
+import Modal from "./components/layouts/CustomModal/CustomModal";
 import StoreProvider from "./provider";
 import { Suspense } from "react";
 
