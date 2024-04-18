@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useAppSelector } from "@/lib/store";
 import { BookData } from "./models/book";
-import { BookCard } from "./components/bookCard/bookCard";
+import { BookCard } from "./components/BookCard/BookCard";
 
 export default function Home() {
   const booksData = useAppSelector((state) => {
