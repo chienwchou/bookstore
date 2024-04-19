@@ -1,4 +1,4 @@
-import { BookData } from "@/app/models/book";
+import { BookData } from "@/models/book";
 import Link from "next/link";
 import Image from "next/image";
 

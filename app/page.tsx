@@ -1,7 +1,7 @@
 "use client";
 import { useAppSelector } from "@/lib/store";
-import { BookData } from "./models/book";
-import { BookCard } from "./components/BookCard/BookCard";
+import { BookData } from "@/models/book";
+import { BookCard } from "@/components/BookCard/BookCard";
 
 export default function Home() {
   const booksData = useAppSelector((state) => {
