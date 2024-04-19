@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import booksData from "../../books-data.json";
-import { BookData, BookFormData } from '@/app/models/book';
+import { BookData, BookFormData } from '@/models/book';
 
 interface InitialState {
     books: BookData[];

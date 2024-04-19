@@ -3,7 +3,7 @@ import { AppDispatch, useAppSelector } from "@/lib/store";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { BookData, BookFormData } from "@/app/models/book";
+import { BookData, BookFormData } from "@/models/book";
 import { useDispatch } from "react-redux";
 import { addBook, deleteBook, editBook } from "@/lib/features/books-slice";
 
