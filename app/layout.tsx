@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Modal from "./components/Layouts/CustomModal/CustomModal";
 import StoreProvider from "./provider";
-import { Suspense } from "react";
+import { Navigation } from "./components/Layouts/Navigation/Navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,10 +20,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <StoreProvider>
-          {children}{" "}
-          <Suspense>
-            <Modal />
-          </Suspense>
+          <Navigation />
+          {children}
         </StoreProvider>
       </body>
     </html>
